@@ -1,0 +1,67 @@
+@startuml
+skinparam classAttributeIconSize 0
+
+interface Registrable {
+  + void registerCourse(Course course)
+}
+
+abstract class Person {
+  # String id
+  # String name
+  + Person(String id, String name)
+  + String getName()
+}
+
+class Student extends Person implements Registrable {
+  - StudyProgram studyProgram
+  - List<Course> courses
+  + Student(String id, String name, StudyProgram studyProgram)
+  + void registerCourse(Course course)
+  + StudyProgram getStudyProgram()
+  + List<Course> getCourses()
+}
+
+class Lecturer extends Person {
+  - String expertise
+  + Lecturer(String id, String name, String expertise)
+  + String getExpertise()
+}
+
+class StudyProgram {
+  - String programName
+  - List<Lecturer> lecturers
+  + StudyProgram(String programName, List<Lecturer> lecturers)
+  + void addLecturer(Lecturer lecturer)
+  + String getProgramName()
+}
+
+class Course {
+  - String courseCode
+  - String courseName
+  - Lecturer lecturer
+  - CoursePlan coursePlan
+  + Course(String courseCode, String courseName, Lecturer lecturer)
+  + Lecturer getLecturer()
+  + CoursePlan getCoursePlan()
+}
+
+class CoursePlan {
+  - String title
+  - List<String> topics
+  + CoursePlan(String courseName)
+  + void addTopic(String topic)
+}
+
+class AcademicReportGenerator {
+  + void printStudentReport(Student student)
+}
+
+' Relasi
+StudyProgram "1" o-- "*" Lecturer : aggregation
+Course "1" *-- "1" CoursePlan : composition
+Course "*" --> "1" Lecturer : association
+Student "*" --> "*" Course : association
+Student "*" --> "1" StudyProgram : association
+AcademicReportGenerator ..> Student : dependency
+
+@enduml

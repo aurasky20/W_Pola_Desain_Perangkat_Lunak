@@ -1,0 +1,17 @@
+@startuml
+
+class Client {
+    +main(String[] args) : void
+}
+
+class Singleton {
+    -instance : Singleton
+    +value : String
+    -Singleton(value : String)
+    +getInstance(Value : String) : Singleton
+}
+
+Client --> Singleton : uses
+Singleton ..> Singleton : instance
+
+@enduml
