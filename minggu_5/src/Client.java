@@ -1,5 +1,3 @@
-
-
 public class Client {
     private static FileXML adaptee;
     public static void main(String[] args){

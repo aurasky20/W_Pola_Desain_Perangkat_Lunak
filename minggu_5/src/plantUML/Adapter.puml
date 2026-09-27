@@ -1,0 +1,25 @@
+@startuml
+
+interface FileXML {
+    + metode(data : String) : String
+}
+
+class Adapter {
+    - adaptee : FileJSON
+    + metode(data : String) : String
+}
+
+class FileJSON {
+    + {static} metode(data : String) : String
+}
+
+class Client {
+    - {static} adaptee : FileXML
+    + {static} main(args : String[]) : void
+}
+
+Adapter ..|> FileXML : implements
+Adapter o--> FileJSON : adaptee
+Client o--> FileXML : adaptee
+
+@enduml
