@@ -1,0 +1,30 @@
+@startuml
+
+class Client {
+    + {static} main(args : String[]) : void
+}
+
+class VideoConverter {
+    - {static} codec : Codec
+    - {static} audio : Audio
+    - {static} file : FileVideo
+    + convertVideo(filename : String, format : String) : String
+}
+
+class Codec {
+    + {static} createCodec() : void
+}
+
+class Audio {
+    + {static} createAudio() : void
+}
+
+class FileVideo {
+    + {static} changeVideo(filename : String, format : String) : String
+}
+
+VideoConverter o--> Codec : codec
+VideoConverter o--> Audio : audio
+VideoConverter o--> FileVideo : file
+
+@enduml
