@@ -1,0 +1,33 @@
+@startuml
+
+abstract class Vehicle {
+    - x : int
+    + move() : void
+    + getX() : int
+    + setX(x : int) : void
+    {abstract} + makeSound() : void
+}
+
+class Car {
+    + makeSound() : void
+}
+
+class Ship {
+    + makeSound() : void
+    + swim() : void
+}
+
+class Plane {
+    + makeSound() : void
+    + fly() : void
+}
+
+class Client {
+    + {static} main(args : String[]) : void
+}
+
+Car --|> Vehicle : is
+Ship --|> Vehicle : is
+Plane --|> Vehicle : is
+
+@enduml
