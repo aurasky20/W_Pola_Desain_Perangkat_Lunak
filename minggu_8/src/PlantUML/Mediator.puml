@@ -1,0 +1,43 @@
+@startuml
+skinparam classAttributeIconSize 0
+
+interface IMediator {
+  + notify(sender: Object, ev: String): void
+}
+
+class BaseComponent {
+  # {static} mediator: IMediator
+  + BaseComponent(mediator: IMediator)
+  + setMediator(mediator: IMediator): void
+}
+
+class Component1 extends BaseComponent {
+  + Component1()
+  + OperasiA(): void
+  + OperasiB(): void
+}
+
+class Component2 extends BaseComponent {
+  + Component2()
+  + OperasiC(): void
+  + OperasiD(): void
+}
+
+class ConcreateMediator implements IMediator {
+  - component1: Component1
+  - component2: Component2
+  + ConcreateMediator(component1: Component1, component2: Component2)
+  + notify(sender: Object, ev: String): void
+}
+
+class Client {
+  + {static} main(args: String[]): void
+}
+
+' Relasi
+BaseComponent "1" ..> "1" IMediator
+BaseComponent o--> "1" IMediator : mediator
+ConcreateMediator o--> "1" Component1 : component1
+ConcreateMediator o--> "1" Component2 : component2
+
+@endl
