@@ -1,0 +1,52 @@
+@startuml
+skinparam classAttributeIconSize 0
+
+' --- Interfaces ---
+interface EventListener {
+    + update(eventType: String, file: File): void
+}
+
+' --- Concrete Subscribers ---
+class LoggingListener {
+    - log: File
+    + LoggingListener(filename: String)
+    + update(eventType: String, file: File): void
+}
+
+class EmailAlertListener {
+    - email: String
+    + EmailAlertListener(email: String)
+    + update(eventType: String, file: File): void
+}
+
+' --- Publisher / Event Manager ---
+class EventManager {
+    - listeners: Map<String, List<EventListener>>
+    + EventManager(operations: String...)
+    + subscribe(eventType: String, listener: EventListener): void
+    + unsubscribe(eventType: String, listener: EventListener): void
+    + notify(eventType: String, file: File): void
+}
+
+' --- Context / Client ---
+class Editor {
+    + event: EventManager
+    - file: File
+    + Editor()
+    + openFile(file: String): void
+    + saveFile(): void
+}
+
+class Demo {
+    + {static} main(args: String[]): void
+}
+
+' --- Relationships ---
+EventListener <|.. LoggingListener : implements
+EventListener <|.. EmailAlertListener : implements
+
+EventManager "1" o--> "*" EventListener : listeners
+EventManager "1" --> "1" EventListener : listeners
+Editor "1" o--> "1" EventManager : event
+
+@enduml
